@@ -4,10 +4,11 @@ import scala.io.Source
 
 class TestBoggleSolver extends Specification
 {
-	val dictionaryList = Source.fromFile("/home/user/git/BoggleTest/data/dictionary.txt").getLines().toList
-	val board1 = Board.makeBoard(Source.fromFile("/home/user/git/BoggleTest/data/board_1.txt").getLines().toList.map(_.toLowerCase))
-	val board2 = Board.makeBoard(Source.fromFile("/home/user/git/BoggleTest/data/board_2.txt").getLines().toList.map(_.toLowerCase))
-	val board6 = Board.makeBoard(Source.fromFile("/home/user/git/BoggleTest/data/board_6_pvt.txt").getLines().toList.map(_.toLowerCase))
+	val dictionaryList = Source.fromFile("data/dictionary.txt").getLines().toList
+	val dictionaryLargeList = Source.fromFile("data/dictionary_large.txt").getLines().toList
+	val board1 = Board.makeBoard(Source.fromFile("data/board_1.txt").getLines().toList.map(_.toLowerCase))
+	val board2 = Board.makeBoard(Source.fromFile("data/board_2.txt").getLines().toList.map(_.toLowerCase))
+	val board6 = Board.makeBoard(Source.fromFile("data/board_6_pvt.txt").getLines().toList.map(_.toLowerCase))
 
 	"solve" should
 	{
@@ -23,36 +24,57 @@ class TestBoggleSolver extends Specification
 		{
 			solve(board1,
 				dictionaryList,
-				"/home/user/git/BoggleTest/data/board_1_solution.txt")
+				"data/board_1_solution.txt")
 		}
 
 		"solve board_2 with a regular dictionary" in
 		{
 			solve(board2,
 				dictionaryList,
-				"/home/user/git/BoggleTest/data/board_2_solution.txt")
+				"data/board_2_solution.txt")
 		}
 
 		"throw when trying to load board 3" in
 		{
-			{val board3 = Board.makeBoard(Source.fromFile("/home/user/git/BoggleTest/data/board_3_pvt.txt").getLines().toList.map(_.toLowerCase))} must throwA[Exception]
+			{val board3 = Board.makeBoard(Source.fromFile("data/board_3_pvt.txt").getLines().toList.map(_.toLowerCase))} must throwA[Exception]
 		}
 
 		"throw when trying to load board 4" in
 		{
-			{val board4 = Board.makeBoard(Source.fromFile("/home/user/git/BoggleTest/data/board_4_pvt.txt").getLines().toList.map(_.toLowerCase))} must throwA[Exception]
+			{val board4 = Board.makeBoard(Source.fromFile("data/board_4_pvt.txt").getLines().toList.map(_.toLowerCase))} must throwA[Exception]
 		}
 
 		"throw when trying to load board 5" in
 		{
-			{val board5 = Board.makeBoard(Source.fromFile("/home/user/git/BoggleTest/data/board_5_pvt.txt").getLines().toList.map(_.toLowerCase))} must throwA[Exception]
+			{val board5 = Board.makeBoard(Source.fromFile("data/board_5_pvt.txt").getLines().toList.map(_.toLowerCase))} must throwA[Exception]
 		}
 
 		"solve board_6 with a regular dictionary" in
 		{
 			solve(board6,
 				dictionaryList,
-				"/home/user/git/BoggleTest/data/board_6_solution.txt")
+				"data/board_6_solution.txt")
+		}
+/*
+		"solve board_1 with a large dictionary" in
+			{
+				solve(board1,
+					dictionaryLargeList,
+					"data/board_1_solution_large.txt")
+			}
+
+		"solve board_2 with a large dictionary" in
+		{
+			solve(board2,
+				dictionaryLargeList,
+				"data/board_2_solution_large.txt")
+		}
+*/
+		"solve board_6 with a large dictionary" in
+		{
+			solve(board6,
+				dictionaryLargeList,
+				"data/board_6_solution_large.txt")
 		}
 	}
 
