@@ -4,6 +4,7 @@
  *
  * @param board a boggle board
  * @param dict a sequence of lowercase words
+ * @param minWordLength the minimum length a word in the dict list must be to be considered a valid word
  */
 class BoggleSolver(val board: Board, val dict: Seq[String], val minWordLength: Int = 3)
 {
