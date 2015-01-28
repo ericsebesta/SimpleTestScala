@@ -1,27 +1,19 @@
 import java.io.{File, PrintWriter}
 import scala.io.Source
 
-//TODO write unit tests that pass in data and test it
-
 object BoggleTest extends App
 {
-  if (args.length != 3)
-  {
-    println("Usage: BoggleTest <dictionary_filename> <board_filename> <output_filename>")
-  }
-  else
-  {
+  if (args.length != 3) println("Usage: BoggleTest <dictionary_filename> <board_filename> <output_filename>")
+  else {
     //try load board file
-    try
-    {
+    try {
       val boardSource = Source.fromFile(args(1))
       //try load dictionary file
-      try
-      {
+      try {
         val dictSource = Source.fromFile(args(0))
-        //lowercase everything for simplicity and durability
+        //lowercase board to match incoming dict data
         val boardLines = boardSource.getLines().toList.map(_.toLowerCase)
-        val dictLines = dictSource.getLines().toList.map(_.toLowerCase)
+        val dictLines = dictSource.getLines().toList
         val resultList = new BoggleSolver(Board.makeBoard(boardLines), dictLines).solve
 
         //write results

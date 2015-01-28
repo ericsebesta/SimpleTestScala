@@ -15,46 +15,28 @@ class BoggleSolver(val board: Board, val dict: Seq[String], val minWordLength: I
 
   private def isOnBoard(word: String): Boolean = {
     if (word.length < minWordLength) false
-    else isOnBoard(word, Nil)
+    else isOnBoard(word, 0, Nil)
   }
 
-
-  //TODO refactor this to share the core loop, specifically by parameterizing WHAT to loop over (i and j), the rest IS the same already
-  //TODO consider passing a currentCharacter int around to avoid copying the string
-  private def isOnBoard(word: String, traversedCells: List[(Int, Int)]): Boolean = {
-    if (word.length == 0) true
+  private def isOnBoard(word: String, currentLetterIndex: Int, traversedCells: List[(Int, Int)]): Boolean = {
+    if (currentLetterIndex == word.length) true
     else
     {
+      //walk the whole board when starting, otherwise work from the current location when recursing
+      val rangeX = if (traversedCells == Nil) 0 until board.width else traversedCells.head._1 - 1 to traversedCells.head._1 + 1
+      val rangeY = if (traversedCells == Nil) 0 until board.height else traversedCells.head._2 - 1 to traversedCells.head._2 + 1
+
       var wordFound = false
-      val currentLetter = word(0)
-      if (traversedCells == Nil) {
-        for (i <- 0 until board.height if !wordFound) {
-          for (j <- 0 until board.width if !wordFound) {
-            if (board.get(i, j) == currentLetter)
-            {
-              val dropAmount = if (currentLetter == 'q' && word(1) == 'u') 2 else 1
-              if (isOnBoard(word.drop(dropAmount), List((i, j)))) wordFound = true
-            }
-          }
-        }
-      }
-      else {
-        val currentLocation = traversedCells.head
-        for (i <- currentLocation._1 - 1 to currentLocation._1 + 1 if !wordFound) {
-          for (j <- currentLocation._2 - 1 to currentLocation._2 + 1 if !wordFound) {
-            if (board.has(i, j) && currentLetter == board.get(i, j) && !hasTraversed(traversedCells, (i, j))) {
-              val dropAmount = if (currentLetter == 'q' && word(1) == 'u') 2 else 1
-              if (isOnBoard(word.drop(dropAmount), (i, j) :: traversedCells)) wordFound = true
-            }
+      val currentLetter = word(currentLetterIndex)
+      for (i <- rangeX if !wordFound) {
+        for (j <- rangeY if !wordFound) {
+          if (board.has(i, j) && board.get(i, j) == currentLetter && !traversedCells.contains((i, j))) {
+            val advanceAmount = if (currentLetter == 'q' && word(currentLetterIndex+1) == 'u') 2 else 1
+            if (isOnBoard(word, currentLetterIndex + advanceAmount, (i, j) :: traversedCells)) wordFound = true
           }
         }
       }
       wordFound
     }
-  }
-
-  //TODO don't need this
-  private def hasTraversed(traversedCells: List[(Int, Int)], cell: (Int, Int)) = {
-    traversedCells.contains(cell)
   }
 }
