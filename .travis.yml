@@ -4,6 +4,4 @@ scala:
 jdk:
   - oraclejdk7
   - openjdk7
-os:
-  - linux
-  - osx
+
