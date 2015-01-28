@@ -18,11 +18,14 @@ class BoggleSolver(val board: Board, val dict: Seq[String], val minWordLength: I
     else isOnBoard(word, Nil)
   }
 
+
+  //TODO refactor this to share the core loop, specifically by parameterizing WHAT to loop over (i and j), the rest IS the same already
+  //TODO consider passing a currentCharacter int around to avoid copying the string
   private def isOnBoard(word: String, traversedCells: List[(Int, Int)]): Boolean = {
-    var wordFound = false
     if (word.length == 0) true
     else
     {
+      var wordFound = false
       val currentLetter = word(0)
       if (traversedCells == Nil) {
         for (i <- 0 until board.height if !wordFound) {
@@ -50,6 +53,7 @@ class BoggleSolver(val board: Board, val dict: Seq[String], val minWordLength: I
     }
   }
 
+  //TODO don't need this
   private def hasTraversed(traversedCells: List[(Int, Int)], cell: (Int, Int)) = {
     traversedCells.contains(cell)
   }

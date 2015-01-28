@@ -1,7 +1,9 @@
-import java.io.PrintWriter
-
+import java.io.{File, PrintWriter}
 import scala.io.Source
-import java.io.File
+
+//TODO get sample data, run it to ensure things work
+//TODO refactor BoggleTest to take Sources and output the list
+//TODO write unit tests that pass in data and test it
 
 object BoggleTest extends App
 {
@@ -11,14 +13,22 @@ object BoggleTest extends App
   }
   else
   {
+    new BoggleTest(args(0), args(1), args(2)).run
+  }
+}
+
+class BoggleTest(val dictFile: String, val boardFile: String, val outputFile: String)
+{
+  def run()
+  {
     //try load board file
     try
     {
-      val boardSource =  Source.fromFile(args(1))
+      val boardSource = Source.fromFile(boardFile)
       //try load dictionary file
       try
       {
-        val dictSource = Source.fromFile(args(0))
+        val dictSource = Source.fromFile(dictFile)
 
         //detect board size, then create a board
         val boardLines = boardSource.getLines().toList.map(_.toLowerCase)
@@ -35,7 +45,7 @@ object BoggleTest extends App
         val boardWidth = (lineLength + 1) / 2 //each character except for last is followed by a single space
         val boardArray = Array.ofDim[Char](boardHeight, boardWidth)
         var lineNumber = 0
-        for(line <- boardLines)
+        for (line <- boardLines)
         {
           var charCounter = 0
           for (i <- 0 until boardWidth)
@@ -54,7 +64,7 @@ object BoggleTest extends App
         val resultList = new BoggleSolver(board, words.map(_.toLowerCase)).solve
 
         //write results
-        val outputFileWriter = new PrintWriter(new File(args(2)))
+        val outputFileWriter = new PrintWriter(new File(outputFile))
         for (word <- resultList) {outputFileWriter.write(word + System.lineSeparator())}
         outputFileWriter.flush()
       }
