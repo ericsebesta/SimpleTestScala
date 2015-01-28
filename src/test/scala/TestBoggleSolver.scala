@@ -5,6 +5,7 @@ import scala.io.Source
 class TestBoggleSolver extends Specification
 {
 	val dictionaryList = Source.fromFile("/home/user/git/BoggleTest/data/dictionary.txt").getLines().toList
+//	val dictionaryLargeList = Source.fromFile("/home/user/git/BoggleTest/data/dictionary_large.txt").getLines().toList
 	val board1 = Board.makeBoard(Source.fromFile("/home/user/git/BoggleTest/data/board_1.txt").getLines().toList.map(_.toLowerCase))
 	val board2 = Board.makeBoard(Source.fromFile("/home/user/git/BoggleTest/data/board_2.txt").getLines().toList.map(_.toLowerCase))
 	val board6 = Board.makeBoard(Source.fromFile("/home/user/git/BoggleTest/data/board_6_pvt.txt").getLines().toList.map(_.toLowerCase))
@@ -57,13 +58,12 @@ class TestBoggleSolver extends Specification
 /*
 		"solve board_1 with a large dictionary" in
 		{
-			solve("/home/user/git/BoggleTest/data/board_1.txt",
-				"/home/user/git/BoggleTest/data/dictionary_large.txt",
+			solve(board1,
+				dictionaryLargeList,
 				"/home/user/git/BoggleTest/data/board_1_solution_large.txt")
 		}
 */
 	}
-
 
 	def solve(board: Board, dict: Seq[String], solutionFile: String) =
 	{
