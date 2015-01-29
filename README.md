@@ -1,0 +1,3 @@
+# BoggleTestScala
+
+A simple readme
