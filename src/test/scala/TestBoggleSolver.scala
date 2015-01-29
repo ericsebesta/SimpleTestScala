@@ -1,5 +1,6 @@
-import org.specs2.mutable.Specification
+package esebesta.BoggleSolverScala
 
+import org.specs2.mutable.Specification
 import scala.io.Source
 
 class TestBoggleSolver extends Specification
@@ -55,7 +56,7 @@ class TestBoggleSolver extends Specification
 				dictionaryList,
 				"data/board_6_solution.txt")
 		}
-/*
+
 		"solve board_1 with a large dictionary" in
 			{
 				solve(board1,
@@ -69,7 +70,7 @@ class TestBoggleSolver extends Specification
 				dictionaryLargeList,
 				"data/board_2_solution_large.txt")
 		}
-*/
+
 		"solve board_6 with a large dictionary" in
 		{
 			solve(board6,

@@ -1,3 +1,5 @@
+package esebesta.BoggleSolverScala
+
 /**
  * Immutable class instance that can solve a boggle board, given a dictionary
  * Also note that BoggleSolver does not modify any input values, making it purely functional
@@ -15,12 +17,18 @@ class BoggleSolver(val board: Board, val dict: Seq[String], val minWordLength: I
   def solve = dict.filter(isOnBoard)
 
   private def isOnBoard(word: String): Boolean = {
+    //if word < 3 letters, not valid
     if (word.length < minWordLength) false
-    else isOnBoard(word, 0, Nil)
+    else
+    {
+      //test for 'q' not followed by 'u', which is not valid
+      if (word.contains('q') && ! word.contains("qu")) false
+      else isOnBoard(word, 0, Nil)
+    }
   }
 
   private def isOnBoard(word: String, currentLetterIndex: Int, traversedCells: List[(Int, Int)]): Boolean = {
-    if (currentLetterIndex == word.length) true
+    if (currentLetterIndex >= word.length) true
     else
     {
       //walk the whole board when starting, otherwise work from the current location when recursing
@@ -32,7 +40,7 @@ class BoggleSolver(val board: Board, val dict: Seq[String], val minWordLength: I
       for (i <- rangeX if !wordFound) {
         for (j <- rangeY if !wordFound) {
           if (board.has(i, j) && board.get(i, j) == currentLetter && !traversedCells.contains((i, j))) {
-            val advanceAmount = if (currentLetter == 'q' && word(currentLetterIndex+1) == 'u') 2 else 1
+            val advanceAmount = if (currentLetter == 'q') 2 else 1
             if (isOnBoard(word, currentLetterIndex + advanceAmount, (i, j) :: traversedCells)) wordFound = true
           }
         }
