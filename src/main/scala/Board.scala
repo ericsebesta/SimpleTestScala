@@ -1,3 +1,5 @@
+package esebesta.BoggleSolverScala
+
 /**
  * An immutable class to store a series of letters
  * Board shouldn't care about the fact that boggle requires 4x4
