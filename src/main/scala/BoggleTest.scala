@@ -1,7 +1,6 @@
 package esebesta.BoggleSolverScala
 
 import java.io.{File, PrintWriter}
-import scala.io.Source
 
 object BoggleTest extends App
 {
@@ -15,6 +14,7 @@ object BoggleTest extends App
         val dictSource = Source.fromFile(args(0))
         //lowercase board to match incoming dict data
         val boardLines = boardSource.getLines().toList.map(_.toLowerCase)
+        //choose to NOT lowercase dictionary data (it is supposed to come in lowercase, trust this)
         val dictLines = dictSource.getLines().toList
         val resultList = new BoggleSolver(Board.makeBoard(boardLines), dictLines).solve
 

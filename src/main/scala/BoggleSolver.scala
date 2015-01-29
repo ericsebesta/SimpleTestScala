@@ -19,8 +19,7 @@ class BoggleSolver(val board: Board, val dict: Seq[String], val minWordLength: I
   private def isOnBoard(word: String): Boolean = {
     //if word < 3 letters, not valid
     if (word.length < minWordLength) false
-    else
-    {
+    else {
       //test for 'q' not followed by 'u', which is not valid
       if (word.contains('q') && ! word.contains("qu")) false
       else isOnBoard(word, 0, Nil)
@@ -29,11 +28,10 @@ class BoggleSolver(val board: Board, val dict: Seq[String], val minWordLength: I
 
   private def isOnBoard(word: String, currentLetterIndex: Int, traversedCells: List[(Int, Int)]): Boolean = {
     if (currentLetterIndex >= word.length) true
-    else
-    {
+    else {
       //walk the whole board when starting, otherwise work from the current location when recursing
-      val rangeX = if (traversedCells == Nil) 0 until board.width else traversedCells.head._1 - 1 to traversedCells.head._1 + 1
-      val rangeY = if (traversedCells == Nil) 0 until board.height else traversedCells.head._2 - 1 to traversedCells.head._2 + 1
+      val rangeX = if (traversedCells == Nil) (0 until board.width) else (traversedCells.head._1 - 1 to traversedCells.head._1 + 1)
+      val rangeY = if (traversedCells == Nil) (0 until board.height) else (traversedCells.head._2 - 1 to traversedCells.head._2 + 1)
 
       var wordFound = false
       val currentLetter = word(currentLetterIndex)
