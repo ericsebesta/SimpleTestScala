@@ -16,8 +16,9 @@ object BoggleTest extends App
         //lowercase board to match incoming dict data
         val boardLines = boardSource.getLines().toList.map(_.toLowerCase)
         //choose to NOT lowercase dictionary data (it is supposed to come in lowercase, trust this)
-        val dictLines = dictSource.getLines().toList
-        val resultList = new BoggleSolver(Board.makeBoard(boardLines), dictLines).solve
+        //leave dictionary as an iterator to avoid loading entire file into memory
+        val dictLinesIterator = dictSource.getLines()
+        val resultList = new BoggleSolver(Board.makeBoard(boardLines), dictLinesIterator).solve
 
         //write results
         val outputFileWriter = new PrintWriter(new File(args(2)))
