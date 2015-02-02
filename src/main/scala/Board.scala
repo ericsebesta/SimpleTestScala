@@ -18,27 +18,35 @@ class Board(val letters: Array[Array[Char]])
 
 object Board
 {
+  /** Take lines of text and turn it into a Board
+    *
+    * @param boardLines the lines of lowercase ascii text
+    * @return a Board
+    *
+    *         Whitespace such as spaces and tabs are removed. The lines should form a "rectangular" board of any size.
+    *         There must be at least 1 line of text.
+    *         Throw if there are no lines of text, or if we cannot find a rectangular set of characters.
+    */
   def makeBoard(boardLines: Seq[String]) =
   {
     //detect board size, then create a board
     val boardHeight = boardLines.length
     if (boardHeight == 0) throw new Exception("no lines found in board file")
-    val lineLength = boardLines(0).length
-    //check that all line lengths are equal
-    val otherLengthLines = boardLines.filter(_.length != lineLength)
+    val boardArray = boardLines.map(parseLine).toArray
+    val lineLength = boardArray.length
+    //check that all line lengths are equal, if not the board cannot be rectangular as requried
+    val otherLengthLines = boardArray.filter(_.length != lineLength)
     if (otherLengthLines.length != 0) throw new Exception("non-rectangular board detected")
-
-    val boardWidth = (lineLength + 1) / 2 //each character except for last is followed by a single space
-    val boardArray: Array[Array[Char]] = Array.ofDim[Char](boardHeight, boardWidth)
-    var lineNumber = 0
-    for (line <- boardLines) {
-      var charCounter = 0
-      for (i <- 0 until boardWidth) {
-        boardArray(lineNumber)(i) = line(charCounter)
-        charCounter += 2
-      }
-      lineNumber += 1
-    }
     new Board(boardArray)
+  }
+
+  /**
+   * Pull only valid letters from a string of text.
+   * @param boardLine The line of text
+   * @return The valid letters
+   */
+  private def parseLine(boardLine: String): Array[Char] = {
+    val validLetters = for (char <- boardLine if char.isLetter) yield char
+    validLetters.toArray
   }
 }
