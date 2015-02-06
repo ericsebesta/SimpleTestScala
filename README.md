@@ -6,6 +6,6 @@ This repository serves as a scala and github exercise. I will use it to implemen
 
 TODO:
 
-Add scalastyle support.
-Auto-generate scaladocs.
+Add scalastyle support.  
+Auto-generate scaladocs.  
 Consider doing some ScalaCheck property based testing.
